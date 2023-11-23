@@ -1,0 +1,19 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 4.16"
+    }
+  }
+
+  required_version = ">= 1.2.0"
+}
+
+provider "aws" {
+  region = "ap-southeast-2"
+}
+
+module "random-with-friends" {
+  source = "../modules/random-with-friends"
+  
+}
