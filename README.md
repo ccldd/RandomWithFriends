@@ -2,4 +2,31 @@
 
 A web application to choose a random choice in realtime with other people.
 
-s
+# Get started
+
+## Prerequisites
+* terraform
+
+## Terraform
+The AWS resources are defined in a shared modules `./terraform/modules/`. This module is included in the 'root' modules where each 'root' module is for a specific environment and region combination.
+
+First, init terraform to download the plugins.
+```
+cd terraform
+terraform init
+```
+
+To deploy to `ap-southeast-2` region, cd to `./terraform/ap-southeast-2`. Validate terraform first by running
+```
+terraform plan
+```
+
+then to deploy run
+```
+terraform apply
+```
+
+Repeat for each environment/region.
+
+## AWS Lambda
+The backend is is a serverless application implemented using AWS API Gateway + lambdas.
