@@ -1,6 +1,3 @@
-# Created by https://www.toptal.com/developers/gitignore/api/linux,terraform,visualstudiocode
-# Edit at https://www.toptal.com/developers/gitignore?templates=linux,terraform,visualstudiocode
-
 ### Linux ###
 *~
 
@@ -211,4 +208,5 @@ dist
 # SvelteKit build / generate output
 .svelte-kit
 
-# End of https://www.toptal.com/developers/gitignore/api/linux,terraform,visualstudiocode
+.dist/
+terraform/**/*.zip
