@@ -1,8 +1,42 @@
+/***********************
+ * API Gateway
+ ***********************/
+
+resource "aws_api_gateway_account" "api_gateway_account" {
+  cloudwatch_role_arn = aws_iam_role.api_gateway_cloudwatch_role.arn
+}
+
+data "aws_iam_policy" "api_gateway_push_to_cloudwatch_logs_policy" {
+  arn = "arn:aws:iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs"
+}
+
+resource "aws_iam_role" "api_gateway_cloudwatch_role" {
+  name = "AmazonAPIGatewayPushToCloudWatchLogs"
+  assume_role_policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Sid" : "",
+        "Effect" : "Allow",
+        "Principal" : {
+          "Service" : "apigateway.amazonaws.com"
+        },
+        "Action" : "sts:AssumeRole"
+      }
+    ]
+  })
+  managed_policy_arns = [data.aws_iam_policy.api_gateway_push_to_cloudwatch_logs_policy.arn]
+}
+
 resource "aws_apigatewayv2_api" "api-gateway" {
   name                       = "websocket-api"
   protocol_type              = "WEBSOCKET"
   route_selection_expression = "$request.body.action"
 }
+
+/***********************
+ * Lambda
+ ***********************/
 
 data "aws_iam_policy_document" "assume_role" {
   statement {
@@ -78,4 +112,9 @@ resource "aws_iam_policy" "lambda_logging" {
 resource "aws_iam_role_policy_attachment" "lambda_logs" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = aws_iam_policy.lambda_logging.arn
+}
+
+resource "aws_iam_role_policy_attachment" "api_gateway" {
+  role       = aws_iam_role.lambda_role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonAPIGatewayInvokeFullAccess"
 }
