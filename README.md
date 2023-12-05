@@ -10,13 +10,17 @@ A web application to choose a random choice in realtime with other people.
 
 ## AWS
 1. Install AWS CLI
-1. setup SSO
+1. Setup SSO
 ```
-aws sso login
+aws configure sso
 SSO session name (Recommended): admin
 SSO start URL [None]: https://d-97675aafd8.awsapps.com/start
 SSO region [None]: ap-southeast-2
 SSO registration scopes [sso:account:access]:
+```
+1. Then login
+```
+aws sso login --profile admin
 ```
 
 ## Terraform
@@ -24,6 +28,7 @@ The AWS resources are defined in a shared modules `./terraform/modules/`. This m
 
 First, init terraform to download the plugins.
 ```
+export AWS_PROFILE=admin
 cd terraform
 terraform init
 ```
