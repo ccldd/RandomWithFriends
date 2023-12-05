@@ -5,7 +5,19 @@ A web application to choose a random choice in realtime with other people.
 # Get started
 
 ## Prerequisites
+* aws cli
 * terraform
+
+## AWS
+1. Install AWS CLI
+1. setup SSO
+```
+aws sso login
+SSO session name (Recommended): admin
+SSO start URL [None]: https://d-97675aafd8.awsapps.com/start
+SSO region [None]: ap-southeast-2
+SSO registration scopes [sso:account:access]:
+```
 
 ## Terraform
 The AWS resources are defined in a shared modules `./terraform/modules/`. This module is included in the 'root' modules where each 'root' module is for a specific environment and region combination.
